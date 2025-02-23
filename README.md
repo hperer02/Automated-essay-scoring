@@ -75,7 +75,7 @@ During the inference phase, the trained model was used to score new, unseen essa
 | Method  | Leader Board Score (QWK) | Validation Score (QWK) |
 | ----------- | ----------- |----------- |
 | DeBERTa only (5 fold CV) |   0.790    | 0.82 |
-|  LightGBM + XGBoost + Feature Engineering (Spelling errors, Word count etc.)  |   0.82      |0.830|
+| <small> LightGBM + XGBoost + Feature Engineering (Spelling errors, Word count etc.)  </small> |   0.82      |0.830|
 |  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.)  |   0.82      |0.830|
 |  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF) |   0.82      |0.830|
 |  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF, Count) |   0.82      |0.830|
