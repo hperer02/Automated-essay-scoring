@@ -72,6 +72,11 @@ In this section, I built and trained the machine learning models using the selec
 
 During the inference phase, the trained model was used to score new, unseen essays. The process involved transforming the new essays using the same feature engineering pipeline and then predicting the scores using the trained model.
 
+| Method  | Leader Board Score (QWK) | Validation Score (QWK) |
+| ----------- | ----------- |----------- |
+| DeBERTa only |       ||
+|    |         ||
+
 ### Steps:
 1. **Data Transformation**: Transformed the new essays using the same preprocessing and feature engineering steps as the training data.
 2. **Prediction**: Used the trained LGBM model to predict the scores for the new essays.
