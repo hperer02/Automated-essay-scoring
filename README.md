@@ -76,14 +76,14 @@ During the inference phase, the trained model was used to score new, unseen essa
 | ----------- | ----------- |----------- |
 |<sub>  DeBERTa only (5 fold CV)</sub> | <sub>   0.790 </sub>   | <sub> 0.82 </sub>|
 | <sub> LightGBM + XGBoost + Feature Engineering (Spelling errors, Word count etc.)  </sub> |   <sub> 0.82  </sub>    | <sub>0.830</sub>|
-|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.)  |   0.82      |0.830|
-|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF) |   0.82      |0.830|
-|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF, Count) |   0.82      |0.830|
-|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF) |   0.82     |0.830|
-|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF) |   0.82     |0.830|
-|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF) + CV 10|   0.82     |0.830|
-|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF) + CV 15|   0.82     |0.830|
-|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF) + CV 15 + Max Depth increase|   0.82     |0.830|
+| <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.)</sub>  | <sub>  0.82  </sub>    |<sub>0.830</sub>|
+| <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF)</sub> |  <sub> 0.82 </sub>     |<sub>0.830</sub>|
+|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF, Count) </sub>| <sub>  0.82    </sub>  |<sub>0.830</sub>|
+|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF) </sub>|  <sub> 0.82   </sub>  |<sub>0.830</sub>|
+|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF) </sub>| <sub>  0.82 </sub>    |<sub>0.830</sub>|
+|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF) + CV 10</sub>|   <sub>0.82   </sub>  |<sub>0.830</sub>|
+| <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF) + CV 15</sub>|   <sub>0.82  </sub>   |<sub>0.830</sub>|
+| <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF) + CV 15 + Max Depth increase</sub>| <sub>  0.82 </sub>    |<sub>0.830</sub>|
 ### Steps:
 1. **Data Transformation**: Transformed the new essays using the same preprocessing and feature engineering steps as the training data.
 2. **Prediction**: Used the trained LGBM model to predict the scores for the new essays.
