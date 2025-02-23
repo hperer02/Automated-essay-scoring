@@ -74,9 +74,13 @@ During the inference phase, the trained model was used to score new, unseen essa
 
 | Method  | Leader Board Score (QWK) | Validation Score (QWK) |
 | ----------- | ----------- |----------- |
-| DeBERTa only |       ||
-|    |         ||
-
+| DeBERTa only (5 fold CV) |   0.790    | 0.82 |
+|  LightGBM + XGBoost + Feature Engineering (Spelling errors, Word count etc.)  |   0.82      |0.830|
+|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.)  |   0.82      |0.830|
+|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF) |   0.82      |0.830|
+|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF, Count) |   0.82      |0.830|
+|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF) |   0.82     |0.830|
+|  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF) |   0.82     |0.830|
 ### Steps:
 1. **Data Transformation**: Transformed the new essays using the same preprocessing and feature engineering steps as the training data.
 2. **Prediction**: Used the trained LGBM model to predict the scores for the new essays.
