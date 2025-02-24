@@ -74,18 +74,20 @@ In this section, I built and trained the machine learning models using the selec
 
 During the inference phase, the trained model was used to score new, unseen essays. The process involved transforming the new essays using the same feature engineering pipeline and then predicting the scores using the trained model.
 
-| Method  | Leader Board Score (QWK) | Validation Score (QWK) |
-| ----------- | ----------- |----------- |
-|<sub>  DeBERTa only </sub> | <sub>   0.7507 </sub>   | <sub> 0.77816 </sub>|
-|<sub>  DeBERTa only (5 fold CV)</sub> | <sub>   0.7900 </sub>   | <sub> 0.8201 </sub>|
-| <sub> LightGBM + XGBoost + Feature Engineering (Spelling errors, Word count etc.)  </sub> |   <sub> 0.81434 </sub>    | <sub>0.82712 </sub>|
-| <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.)  + Vectorization (TF-IDF) </sub>   | <sub>  0.8169  </sub>    |<sub>0.8315</sub>|
-| <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF)+ Standardscaler </sub> |  <sub> 0.8175 </sub> |<sub>0.8318</sub>|
-|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF, Count)+ Standardscaler </sub>| <sub>  0.8178 </sub>  |<sub> 0.8320 </sub>|
-|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler </sub>| <sub>  0.8182 </sub>    |<sub>0.83269</sub>|
-|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count) + Standardscaler + CV 10<kbd>↓</kbd></sub>|   <sub>0.82   </sub>  |<sub>0.830</sub>|
-| <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler + CV 15</sub>|   <sub>0.82  </sub>   |<sub>0.830</sub>|
-| <sub> LightGBM(LR 0.1, Max Depth 8)  + XGBoost(LR 0.05, Max Depth 8) + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler + CV 20 + Max Depth 8 </sub>| <sub>  0.8243 </sub>    |<sub>0.8299</sub>|
+| Method  | Description| Leader Board Score (QWK) | Validation Score (QWK) |
+| -----------| ----------- | ----------- |----------- |
+|<sub>1</sub>|<sub>  DeBERTa only </sub> | <sub>   0.7507 </sub>   | <sub> 0.77816 </sub>|
+|<sub>2</sub>|<sub>  DeBERTa only (5 fold CV)</sub> | <sub>   0.7900 </sub>   | <sub> 0.8201 </sub>|
+|<sub>3</sub>| <sub> LightGBM + XGBoost + Feature Engineering (Spelling errors, Word count etc.)  </sub> |   <sub> 0.81434 </sub>    | <sub>0.82712 </sub>|
+|<sub>4</sub>| <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.)  + Vectorization (TF-IDF) </sub>   | <sub>  0.8169  </sub>    |<sub>0.8315</sub>|
+|<sub>5</sub>| <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF)+ Standardscaler </sub> |  <sub> 0.8175 </sub> |<sub>0.8318</sub>|
+|<sub>6</sub>|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF, Count)+ Standardscaler </sub>| <sub>  0.8178 </sub>  |<sub> 0.8320 </sub>|
+|<sub>7</sub>|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler </sub>| <sub>  0.8182 </sub>    |<sub>0.83269</sub>|
+|<sub>8</sub>|<sub>  LightGBM(LR 0.1) + XGBoost(LR 0.05<kbd>↓</kbd>) + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler </sub>| <sub>  0.8199 </sub>    |<sub>0.8324</sub>|
+|<sub>9</sub>|<sub>  LightGBM(ngram change) + XGBoost(ngram change) + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler </sub>| <sub>  0.8019 </sub>    |<sub>0.8124</sub>|
+|<sub>10</sub>|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count) + Standardscaler + CV 10<kbd>↓</kbd></sub>|   <sub>0.8165   </sub>  |<sub>0.8122</sub>|
+|<sub>11</sub>| <sub> LightGBM(LR 0.1, Max Depth 10)  + XGBoost(LR 0.05, Max Depth 10) + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler + CV 20 <kbd>↑</kbd></sub>|   <sub>0.8224  </sub>   |<sub>0.8275 </sub>|
+|<sub>12</sub>| <sub> LightGBM(LR 0.1, Max Depth 8)  + XGBoost(LR 0.05, Max Depth 8) + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler + CV 20 </sub>| <sub>  0.8243 </sub>    |<sub>0.8299</sub>|
 ### Steps:
 1. **Data Transformation**: Transformed the new essays using the same preprocessing and feature engineering steps as the training data.
 2. **Prediction**: Used the trained LGBM model to predict the scores for the new essays.
