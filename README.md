@@ -83,7 +83,7 @@ During the inference phase, the trained model was used to score new, unseen essa
 | <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF)+ Standardscaler </sub> |  <sub> 0.8175 </sub> |<sub>0.8318</sub>|
 |<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count etc.) + Vectorization (TF-IDF, Count)+ Standardscaler </sub>| <sub>  0.8178 </sub>  |<sub> 0.8320 </sub>|
 |<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler </sub>| <sub>  0.8182 </sub>    |<sub>0.83269</sub>|
-|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count) + Standardscaler + CV 10</sub>|   <sub>0.82   </sub>  |<sub>0.830</sub>|
+|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count) + Standardscaler + CV 10<kbd>↓</kbd></sub>|   <sub>0.82   </sub>  |<sub>0.830</sub>|
 | <sub> LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler + CV 15</sub>|   <sub>0.82  </sub>   |<sub>0.830</sub>|
 | <sub> LightGBM(LR 0.1, Max Depth 8)  + XGBoost(LR 0.05, Max Depth 8) + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler + CV 20 + Max Depth 8 </sub>| <sub>  0.8243 </sub>    |<sub>0.8299</sub>|
 ### Steps:
