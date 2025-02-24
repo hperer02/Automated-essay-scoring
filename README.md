@@ -1,78 +1,134 @@
 # Automated Essay Scoring 2.0
 
-This repository contains my solution for the Kaggle competition Automated Essay Scoring 2.0. The goal of this project is to develop an automated system capable of scoring essays based on their content and quality using machine learning techniques. Several approaches were considered for this task, initially fine-tuning a Large Language Model (DeBERTa) for the task, then using an average of several DeBERTa models trained on differents folds (cross validation). 
+This repository contains my solution for the Kaggle competition **Automated Essay Scoring 2.0**. The goal is to develop an **automated system** that evaluates essays based on their **content and quality** using advanced machine learning techniques.
 
-The best QWK score was achieved by using a combination of LightGBM and XGBoost with more weight towards the predictions of LightGBM. Further, advance feature engineering, model optimization and hyper paramter tuning techniques were used to further enhance the results. Results of each approach can be found in inference section.
+Multiple approaches were considered, including:
+- **Fine-tuning DeBERTa**, a transformer-based language model.
+- **Ensembling multiple DeBERTa models** trained across different folds.
+- **Combining LightGBM & XGBoost** with feature engineering, model optimization, and hyperparameter tuning.
+
+The **best Quadratic Weighted Kappa (QWK) score** was achieved using **LightGBM + XGBoost**, with more weight assigned to LightGBM’s predictions. The details of each approach and their results are available in the **Inference** section.
+
+---
 
 ## Table of Contents
 - [Data Loading & Preprocessing](#data-loading--preprocessing)
 - [Feature Engineering](#feature-engineering)
-  - [Paragraph Features](#paragraph-features)
-  - [Sentence Features](#sentence-features)
-  - [Word Features](#word-features)
-  - [Vectorizer](#vectorizer)
-  - [DeBERTa Predictions to LGBM as Features](#deberta-predictions-to-lgbm-as-features)
+  - [Paragraph-Level Features](#paragraph-level-features)
+  - [Sentence-Level Features](#sentence-level-features)
+  - [Word-Level Features](#word-level-features)
+  - [Spelling & Grammar Features](#spelling--grammar-features)
+  - [TF-IDF & Count Vectorizer](#tf-idf--count-vectorizer)
+  - [DeBERTa Predictions as Features](#deberta-predictions-as-features)
 - [Feature Selection](#feature-selection)
 - [Model Building & Training](#model-building--training)
 - [Inference](#inference)
+- [Results & Performance](#results--performance)
+- [Conclusion](#conclusion)
+- [Acknowledgements](#acknowledgements)
+
+---
 
 ## Data Loading & Preprocessing
 
-In this section, I loaded the dataset provided by Kaggle and performed initial preprocessing steps to prepare the data for feature engineering and model training. 
+This phase involves preparing the dataset for further analysis and model training.
 
 ### Steps:
-1. **Loading Data**: Imported the dataset using Pandas.
-2. **Handling Missing Values**: Checked for and handled any missing values to ensure data integrity.
-3. **Data Cleaning**: Removed any irrelevant information and standardized the format of the essays.
+1. **Loading Data**: Essays are loaded using `pandas` and stored in a structured format.
+2. **Text Cleaning**: A `dataPreprocessing` function is applied to:
+   - Convert text to lowercase.
+   - Remove **HTML tags**, **URLs**, **mentions (@user)**, and **numeric values**.
+   - Replace consecutive spaces, commas, and periods with single instances.
+   - Trim whitespace for a structured output.
+3. **Handling Missing Values**: Any missing data is handled to maintain data integrity.
+
+---
 
 ## Feature Engineering
 
-Feature engineering is crucial for improving the performance of the model. Various features were extracted from the essays to capture different aspects of the text.
+Feature engineering plays a crucial role in improving model performance. Multiple **text-based features** were extracted at different levels.
 
-### Paragraph Features
+### Paragraph-Level Features
+- Number of **paragraphs** per essay.
+- **Average paragraph length**.
+- **Coherence score** between paragraphs.
 
-Extracted features related to the structure of the paragraphs within the essays, such as the number of paragraphs, average length of paragraphs, and coherence between paragraphs.
+### Sentence-Level Features
+- Number of **sentences** per essay.
+- **Average sentence length**.
+- **Sentence complexity**, calculated using grammatical structure.
 
-### Sentence Features
+### Word-Level Features
+- **Vocabulary richness**.
+- **Word frequency distribution**.
+- **Stop word usage analysis**.
+- **Sentiment polarity** of the essay.
 
-Extracted features related to sentence structure, such as the number of sentences, average sentence length, grammatical correctness, and complexity of sentences.
+### Spelling & Grammar Features
+- **Spelling errors** detected using **NLTK’s WordNet Lemmatizer** and an English vocabulary set.
+- **Grammar mistakes** identified using **Python’s LanguageTool**.
+- Count of **adjectives**, **adverbs**, and **grammatical errors** using **POS tagging**.
 
-### Word Features
+### TF-IDF & Count Vectorizer
+- **TF-IDF Vectorizer**: Assigns weights to words based on frequency & importance.
+- **Count Vectorizer**: Captures **word frequency** in essays.
 
-Extracted features related to the words used in the essays, such as vocabulary richness, usage of unique words, frequency of stop words, and sentiment analysis.
+### DeBERTa Predictions as Features
+- **DeBERTa Transformer Model** generates predictions for essay scores.
+- These predictions are **fed into LightGBM** as additional features.
 
-### Vectorizer
-
-Converted the text data into numerical format using different vectorization techniques to capture the importance and frequency of words.
-
-#### TF-IDF Vectorizer
-
-Used TF-IDF (Term Frequency-Inverse Document Frequency) Vectorizer to assign weights to words based on their frequency and importance across the corpus. This technique helps in identifying significant words that contribute to the meaning of the essays.
-
-#### Count Vectorizer
-
-Used Count Vectorizer to convert the text data into a matrix of token counts. This technique helps in capturing the frequency of words in the essays, providing a simple yet effective way to quantify textual data.
-
-### DeBERTa Predictions to LGBM as Features
-
-Utilized the DeBERTa (Decoding-enhanced BERT with disentangled attention) model to generate predictions for the essays. These predictions were then used as additional features in the LightGBM (LGBM) model to improve its performance.
+---
 
 ## Feature Selection
 
-Performed feature selection to identify the most significant features that contribute to the essay scores. This step helps in reducing the dimensionality of the data and improving the efficiency of the model.
+To enhance model efficiency, only the **most important features** are selected:
+- A **10-fold Stratified CV** trains a **LightGBM regressor** with a **custom QWK objective**.
+- **Feature importance scores** are accumulated across folds.
+- The **top 13,000 most important features** are retained.
+
+---
 
 ## Model Building & Training
 
-In this section, I built and trained the machine learning models using the selected features.
+Two ensemble models are used: **LightGBM** and **XGBoost**.
 
-### Steps:
-1. **Model Selection**: Chose LightGBM (LGBM) as the primary model due to its efficiency and performance.
-2. **Training**: Trained the LGBM model on the training dataset with the selected features.
-3. **Validation**: Validated the model using cross-validation techniques to ensure its robustness and generalizability.
+### Cross-Validation Strategy:
+- **Stratified K-Fold (n_splits=20)** ensures **class balance** across training & validation sets.
+
+### Training Process:
+1. **LightGBM Regressor**:
+   - Initialized with optimized **hyperparameters** (learning rate, depth, regularization).
+   - Trained using **quadratic weighted kappa (QWK) loss**.
+   
+2. **XGBoost Regressor**:
+   - Uses early stopping & QWK-based loss function.
+   - Pre-tuned **learning rate, depth, and colsample parameters**.
+
+3. **Model Ensembling**:
+   - Final prediction = **76% LightGBM + 24% XGBoost**.
+   - Predictions are **adjusted** using a **constant `a`** and **clipped between 1 and 6**.
+
+4. **Performance Metrics**:
+   - Evaluated using **F1 Score** and **Cohen's Kappa**.
+   - Memory optimized using **garbage collection**.
+
+---
 
 ## Inference
 
-During the inference phase, the trained model was used to score new, unseen essays. The process involved transforming the new essays using the same feature engineering pipeline and then predicting the scores using the trained model.
+### Steps:
+1. **Data Transformation**:
+   - New essays undergo the same **preprocessing & feature engineering** pipeline.
+2. **Prediction**:
+   - Trained **LightGBM + XGBoost model** predicts essay scores.
+3. **Post-Processing**:
+   - Scores **rounded & clipped** to valid range.
+4. **Output**:
+   - Final predictions are saved for submission.
+
+---
+
+## Results & Performance
 
 | Method  | Description| Leader Board Score (QWK) | Validation Score (QWK) |
 | -----------| ----------- | ----------- |----------- |
@@ -88,17 +144,24 @@ During the inference phase, the trained model was used to score new, unseen essa
 |<sub>10</sub>|<sub>  LightGBM + XGBoost + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count) + Standardscaler + CV 10<kbd>↓</kbd></sub>|   <sub>0.8165   </sub>  |<sub>0.8122</sub>|
 |<sub>11</sub>| <sub> LightGBM(LR 0.1, Max Depth 10)  + XGBoost(LR 0.05, Max Depth 10) + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler + CV 20 <kbd>↑</kbd></sub>|   <sub>0.8224  </sub>   |<sub>0.8275 </sub>|
 |<sub>12</sub>| <sub> LightGBM(LR 0.1, Max Depth 8)  + XGBoost(LR 0.05, Max Depth 8) + Feature Engineering (DeBERTa predictions, Spelling errors, Word count, Grammar, Adjectives, Pronouns etc.) + Vectorization (TF-IDF, Count)+ Standardscaler + CV 20 </sub>| <sub>  0.8243 </sub>    |<sub>0.8299</sub>|
-### Steps:
-1. **Data Transformation**: Transformed the new essays using the same preprocessing and feature engineering steps as the training data.
-2. **Prediction**: Used the trained LGBM model to predict the scores for the new essays.
-3. **Output**: Generated the final scores and saved the results in the required format for submission.
+---
 
 ## Conclusion
 
-This project showcases a comprehensive approach to automated essay scoring using advanced machine learning techniques. By leveraging powerful models like DeBERTa and LGBM, and performing thorough feature engineering and selection, the solution aims to achieve high accuracy and robustness in scoring essays.
+This project presents a **comprehensive approach** to automated essay scoring by combining:
+- **State-of-the-art transformers (DeBERTa)**
+- **Tree-based models (LightGBM & XGBoost)**
+- **Advanced feature engineering**
+- **Custom optimization strategies for QWK metric**
+
+By leveraging multiple models, ensembling techniques, and rigorous evaluation, this approach achieves **high accuracy & robustness** in essay scoring.
+
+---
 
 ## Acknowledgements
 
-Special thanks to Learning Agency Lab for providing the dataset and hosting the competition. Also, gratitude to the open-source community for providing the tools and libraries that made this project possible.
+Special thanks to **Learning Agency Lab** for providing the dataset and hosting the competition. Additional gratitude to the **open-source community** for developing tools that enabled this work.
 
-**Competition link** - https://www.kaggle.com/competitions/learning-agency-lab-automated-essay-scoring-2
+🔗 **Competition Link**: [Kaggle: Automated Essay Scoring 2.0](https://www.kaggle.com/competitions/learning-agency-lab-automated-essay-scoring-2)
+
+
